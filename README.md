@@ -1,2 +1,4 @@
 # Blackout
 A Web Based Horror Game Developed for COMP1004
+
+Blackout is a web-based horror game designed for horror fans who want a fast paced 2D horror experience with an emphasis on stealth and using your limited tools to survive. Blackouts core mechanics is finding torches, map pieces and avoiding enemy encounters while navigating a branching cave system, all while an impending countdown starts from the second the player enters a room. It is designed for mouse and keyboard on a browser limiting its audience outside of mobile and it aims to pressure players into critical thinking with fast decision making. Blackout is like other horror survival games in that resource management is key, however, the project aims to be different by with the countdown mechanic. The goal behind Blackout is to make a fun fast paced 2D horror game that appeals to the target audience and can be quickly replayed.
