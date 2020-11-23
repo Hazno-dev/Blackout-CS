@@ -1,0 +1,26 @@
+﻿body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+h1{
+    background-color: antiquewhite;
+    color: saddlebrown;
+    transition: all 500ms ease-in-out;
+}
+h1:hover{
+    transition: all 500ms ease-in-out;
+    background-color: black;
+    color: white;
+}
+h2{
+    background-color: cornflowerblue;
+    color: white;
+}
+h2:hover{
+    color: black;
+}
+h3{
+    color: pink;
+}
+h3.clicked{
+    color: red;
+}
