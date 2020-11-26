@@ -1,15 +1,28 @@
 ﻿body {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Courier New", sans-serif;
+    background-color: dimgray;
+    background-image: url("Background.png");
 }
-h1{
-    background-color: antiquewhite;
-    color: saddlebrown;
-    transition: all 500ms ease-in-out;
-}
-h1:hover{
-    transition: all 500ms ease-in-out;
+header{
     background-color: black;
-    color: white;
+    margin: auto;
+    color: grey;
+    animation: h1colour 4s infinite alternate;
+    text-align: center;
+    font-size: 40px;
+}
+@keyframes h1colour {
+    from {background-color: black;}
+    to {background-color: white;}
+}
+.info{
+    height: 100px;
+    width: 100px;
+    background-color: azure;
+    border: 10px solid aqua;
+    alignment: right;
+    align-self: center;
+    text-align: right;
 }
 h2{
     background-color: cornflowerblue;

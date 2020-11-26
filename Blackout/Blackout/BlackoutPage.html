@@ -4,19 +4,23 @@
     <meta charset="utf-8" />
     <title>Blackout</title>
     <link href="StyleSheet.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
+    <script src="p5.sound.min.js"></script>
 </head>
 <body>
-    <h1>Blackout</h1>
+    <header>Blackout</header>
     <h2>A Game By Hazno</h2>
     <h2>Navigate a deadly cave before the timer runs out</h2>
     <h3 onclick="Click(this)">Testing</h3>
-
+<!--    <div class="info"> test</div>-->
+<!--    <canvas id="Info" width="200" height="100" style="border: 2px solid antiquewhite;"></canvas>-->
     <script>
         function Click(node) {
             var value = node.getAttribute('class') || '';
-            value = value == '' ? 'clicked' : '';
+            value = value === '' ? 'clicked' : '';
             node.setAttribute('class', value);
         }
     </script>
+    <script src="Blackout1.js"></script>
 </body>
 </html>

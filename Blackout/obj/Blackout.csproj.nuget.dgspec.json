@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Callum\\source\\repos\\Blackout\\Blackout\\Blackout.csproj": {}
+    "C:\\Users\\Callum\\Desktop\\Github\\Blackout-CS\\Blackout\\Blackout.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Callum\\source\\repos\\Blackout\\Blackout\\Blackout.csproj": {
+    "C:\\Users\\Callum\\Desktop\\Github\\Blackout-CS\\Blackout\\Blackout.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Callum\\source\\repos\\Blackout\\Blackout\\Blackout.csproj",
+        "projectUniqueName": "C:\\Users\\Callum\\Desktop\\Github\\Blackout-CS\\Blackout\\Blackout.csproj",
         "projectName": "Blackout",
-        "projectPath": "C:\\Users\\Callum\\source\\repos\\Blackout\\Blackout\\Blackout.csproj",
+        "projectPath": "C:\\Users\\Callum\\Desktop\\Github\\Blackout-CS\\Blackout\\Blackout.csproj",
         "packagesPath": "C:\\Users\\Callum\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Callum\\source\\repos\\Blackout\\Blackout\\obj\\",
+        "outputPath": "C:\\Users\\Callum\\Desktop\\Github\\Blackout-CS\\Blackout\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Callum\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -26,7 +26,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -38,7 +37,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
