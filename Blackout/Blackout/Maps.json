@@ -1,0 +1,154 @@
+﻿{
+  "rooms": [
+    {
+      "name": "intro",
+      "x": 600,
+      "y": 1000,
+      "items": [
+        {
+          "medkit": true,
+          "puzzle": true,
+          "torches": true,
+          "map": true
+        }
+      ],
+      "trapped": true,
+      "final": false,
+      "doors": 2,
+      "gates": 1
+    },
+    {
+      "name": "pnheal",
+      "x": 500,
+      "y": 700,
+      "items": [
+        {
+          "medkit": false,
+          "puzzle": true,
+          "torches": true,
+          "map": true
+        }
+      ],
+      "trapped": false,
+      "final": false,
+      "doors": 2,
+      "gates": 1
+    },
+    {
+      "name": "ptrap",
+      "x": 700,
+      "y": 1200,
+      "items": [
+        {
+          "medkit": false,
+          "puzzle": true,
+          "torches": false,
+          "map": true
+        }
+      ],
+      "trapped": true,
+      "final": false,
+      "doors": 2,
+      "gates": 2
+    },
+    {
+      "name": "full",
+      "x": 800,
+      "y": 1200,
+      "items": [
+        {
+          "medkit": true,
+          "puzzle": true,
+          "torches": true,
+          "map": true
+        }
+      ],
+      "trapped": true,
+      "final": false,
+      "doors": 2,
+      "gates": 2
+    },
+    {
+      "name": "trap",
+      "x": 600,
+      "y": 1100,
+      "items": [
+        {
+          "medkit": false,
+          "puzzle": false,
+          "torches": true,
+          "map": true
+        }
+      ],
+      "trapped": true,
+      "final": false,
+      "doors": 2,
+      "gates": 2
+    },
+    {
+      "name": "heal",
+      "x": 600,
+      "y": 1000,
+      "items": [
+        {
+          "medkit": true,
+          "puzzle": false,
+          "torches": false,
+          "map": false
+        }
+      ],
+      "trapped": false,
+      "final": false,
+      "doors": 1
+    },
+    {
+      "name": "torch",
+      "x": 600,
+      "y": 1000,
+      "items": [
+        {
+          "medkit": false,
+          "puzzle": false,
+          "torches": true,
+          "map": false
+        }
+      ],
+      "trapped": false,
+      "final": false,
+      "doors": 1
+    },
+    {
+      "name": "final",
+      "x": 500,
+      "y": 900,
+      "items": [
+        {
+          "medkit": false,
+          "puzzle": false,
+          "torches": false,
+          "map": false
+        }
+      ],
+      "trapped": true,
+      "final": false,
+      "doors": 0
+    },
+
+    {
+      "name": "end",
+      "x": 500,
+      "y": 500,
+      "items": [
+        {
+          "medkit": false,
+          "puzzle": false,
+          "torches": false,
+          "map": false
+        }
+      ],
+      "trapped": false,
+      "final": false,
+      "doors": 0
+    }
+  ]
+}

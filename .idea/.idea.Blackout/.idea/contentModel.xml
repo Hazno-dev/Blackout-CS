@@ -13,32 +13,85 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Blackout" t="Include">
+          <e p="Backdrop.png" t="Include" />
+          <e p="Backfill.psd" t="Include" />
           <e p="Background.png" t="Include" />
+          <e p="Background.psd" t="Include" />
+          <e p="BackMap.psd" t="Include" />
+          <e p="BackOrb.png" t="Include" />
+          <e p="BackOrb.psd" t="Include" />
           <e p="Blackout1.js" t="Include" />
           <e p="BlackoutPage.html" t="Include" />
+          <e p="Eye.png" t="Include" />
+          <e p="FinalRing.png" t="Include" />
+          <e p="Floor.png" t="Include" />
+          <e p="Floor1.png" t="Include" />
+          <e p="Floor1.psd" t="Include" />
+          <e p="Floor2.png" t="Include" />
+          <e p="Floor2.psd" t="Include" />
+          <e p="Floor3.png" t="Include" />
+          <e p="Floor3.psd" t="Include" />
+          <e p="Floor4.png" t="Include" />
+          <e p="Floor4.psd" t="Include" />
+          <e p="Floor5.png" t="Include" />
+          <e p="Floor5.psd" t="Include" />
+          <e p="Gate.png" t="Include" />
+          <e p="gate.psd" t="Include" />
+          <e p="Gateopen.png" t="Include" />
+          <e p="gateopen.psd" t="Include" />
           <e p="Health.png" t="Include" />
           <e p="Health.psd" t="Include" />
           <e p="logo.png" t="Include" />
           <e p="logo.psd" t="Include" />
           <e p="Map.png" t="Include" />
           <e p="map.psd" t="Include" />
+          <e p="MapBackdrop.png" t="Include" />
+          <e p="Maps.json" t="Include" />
+          <e p="Miner2.psd" t="Include" />
           <e p="Minerback.png" t="Include" />
           <e p="Minerback.psd" t="Include" />
+          <e p="MinerBack2.png" t="Include" />
+          <e p="MinerBackL.png" t="Include" />
+          <e p="MinerBackR.png" t="Include" />
           <e p="MinerFor.png" t="Include" />
           <e p="Minerfor.psd" t="Include" />
+          <e p="MinerForward.png" t="Include" />
+          <e p="MinerForwardL.png" t="Include" />
+          <e p="MinerForwardR.png" t="Include" />
           <e p="Minerleft.png" t="Include" />
           <e p="Minerleft.psd" t="Include" />
+          <e p="MinerLeft2.png" t="Include" />
           <e p="Minerright.png" t="Include" />
           <e p="Minerright.psd" t="Include" />
+          <e p="MinerRight2.png" t="Include" />
+          <e p="Orb.png" t="Include" />
+          <e p="Orb.psd" t="Include" />
+          <e p="OrbConsumed.png" t="Include" />
           <e p="p5.sound.js" t="Include" />
           <e p="p5.sound.js.map" t="Include" />
           <e p="p5.sound.min.js" t="Include" />
           <e p="p5.sound.min.js.map" t="Include" />
+          <e p="Puzzles.js" t="Include" />
+          <e p="Safe.png" t="Include" />
+          <e p="Safe.psd" t="Include" />
           <e p="StyleSheet.css" t="Include" />
           <e p="Torch.png" t="Include" />
+          <e p="torch.psd" t="Include" />
+          <e p="Unknown-Recovered.psd" t="Include" />
+          <e p="Unknown.png" t="Include" />
+          <e p="Unknown.psd" t="Include" />
+          <e p="Unsafe-Recovered.psd" t="Include" />
+          <e p="Unsafe.png" t="Include" />
+          <e p="Unsafe.psd" t="Include" />
           <e p="Untitled-2-Recovered.psd" t="Include" />
+          <e p="Untitled-2-Recovered2.psd" t="Include" />
           <e p="Untitled-3-Recovered.psd" t="Include" />
           <e p="Untitled-4-Recovered.psd" t="Include" />
+          <e p="Untitlerffd-1.psd" t="Include" />
+          <e p="WakeLook.png" t="Include" />
+          <e p="WakeLook.psd" t="Include" />
+          <e p="WakeSky.png" t="Include" />
+          <e p="WakeSky.psd" t="Include" />
         </e>
         <e p="Blackout.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
