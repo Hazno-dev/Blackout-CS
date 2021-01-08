@@ -35,6 +35,19 @@ let button;
 let transition;
 let flooring;
 var data;
+let minigames = {
+    Ingame1: undefined,
+    Ingame2: undefined,
+    Type1: undefined,
+    Type2: undefined,
+    StopGIm: undefined,
+    StopGImBack: undefined,
+    Spamspace: undefined,
+    Count: 0,
+    StopGSize: 0.5,
+    FindPos: undefined,
+    FindTrue: undefined
+}
 let item = {
     mapcountc: 0
 }
@@ -126,6 +139,7 @@ let eyes = {
     y1: 0,
     y2: 0
 }
+// Image Loading - Sets all needed files and images to variables
 function preload() {
     player.for = loadImage('MinerForward.png');
     player.forl = loadImage('MinerForwardL.png');
@@ -164,10 +178,12 @@ function preload() {
     floor.three = loadImage('Floor3.png');
     floor.four = loadImage('Floor4.png');
     floor.five = loadImage('Floor5.png');
+    minigames.StopGIm = loadImage('Love.png');
+    minigames.StopGImBack = loadImage('doorback.png');
+    player.leftdark = loadImage('MinerLeft2Dark.png');
     data = loadJSON('Maps.json');
 }
-
-
+// Create Canvas - Creates the canvas
 function setup() {
     canv = createCanvas(windowWidth/2, windowHeight/1.8);
     canv.position(windowWidth/4, windowHeight*0.3);
@@ -191,6 +207,7 @@ function buttonstart() {
     game.final = false;
     RandomGen();
 }
+//Restart Button
 function restartmatch() {
     restart.button.hide();
     transition = true;
@@ -202,8 +219,7 @@ function restartmatch() {
     game.final = false;
     RandomGen();
 }
-
-//map generation
+//Map Generation
 function MapGen() {
     switch (game.current){
         case 0:
@@ -217,6 +233,7 @@ function MapGen() {
             game.gates = 1;
             player.gate1comp = false;
             game.name = data.rooms[0].name;
+            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
             break;
         case 1:
             game.X = game.level[0].x;
@@ -228,6 +245,8 @@ function MapGen() {
             game.doors = game.level[0].doors;
             game.gates = game.level[0].gates;
             game.name = game.level[0].name;
+            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
             break;
         case 2:
             game.X = game.level[1].x;
@@ -239,6 +258,8 @@ function MapGen() {
             game.doors = game.level[1].doors;
             game.gates = game.level[1].gates;
             game.name = game.level[1].name;
+            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
             break;
         case 3:
             game.X = game.level[2].x;
@@ -250,6 +271,8 @@ function MapGen() {
             game.doors = game.level[2].doors;
             game.gates = game.level[2].gates;
             game.name = game.level[2].name;
+            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
             break;
         case 4:
             game.X = game.level[3].x;
@@ -261,6 +284,8 @@ function MapGen() {
             game.doors = game.level[3].doors;
             game.gates = game.level[3].gates;
             game.name = game.level[3].name;
+            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
             break;
         case 5:
             game.X = game.level[4].x;
@@ -272,6 +297,8 @@ function MapGen() {
             game.doors = 1
             game.gates = game.level[4].gates;
             game.name = game.level[4].name;
+            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
             break;
         case 6:
             game.X = (data.rooms[7].x);
@@ -292,7 +319,7 @@ function MapGen() {
             break;
     }
 }
-
+//Random Map Generation - Sets each index in Game.Map to a random set of objects from the Maps.JSON file
 function RandomGen() {
     for (let i = 0; i < 5; i++) {
         game.map[i] = Math.round(Math.random());
@@ -321,7 +348,7 @@ function RandomGen() {
     }
     pop();
 }*/
-
+//Map Drawing - Called in Draw() and will draw the map aswell as calling functions for drawing Gates, Orbs and Portals
 function MapAndBorders(){
     fill(14, 99);
     imageMode(CORNER);
@@ -429,7 +456,7 @@ function GatesDraw21() {
     line(XYC.XO + 9, (XYC.YO + (game.Y/2)) - 10, XYC.XO + 9, (XYC.YO + (game.Y/2)) + 70);
     pop();
 }
-
+// Single level Gates
 function GatesDraw1() {
     push();
     imageMode(CENTER);
@@ -452,7 +479,7 @@ function GatesDraw1() {
     line(XYC.XO + 9, (XYC.YO + (game.Y/2)) - 10, XYC.XO + 9, (XYC.YO + (game.Y/2)) + 70);
     pop();
 }
-
+// Final Level register - Called in MapAndBorders() and will register when the player enters the final victory animation
 function final() {
     push();
     imageMode(CENTER);
@@ -495,7 +522,6 @@ function DarkFaintFade(){
     rect(0, 0, width, height);
     if (fadepro<210) fadepro += 5;
 }
-
 function WhiteFadeOut(a, b, c, d){
     fill(255, 255, 255, fade);
     rectMode(CORNERS);
@@ -529,7 +555,7 @@ function fall(){
     image(back, width/10, heightoffall);
     heightoffall -= height * 0.01;
 }
-
+//Renders the Map Hud images
 function HudBoxes(index, a, b, c, d, a2, b2, c2, d2) {
     if (game.level[index].which === 0){
         image(maphud.safe, width * a , height * b, width * c, height * d);
@@ -543,12 +569,12 @@ function HudBoxes(index, a, b, c, d, a2, b2, c2, d2) {
         image(maphud.unknown, width * a2 , height * b2, width * c2, height * d2);
     }
 }
+//Player on the hud is placed here
 function CurrentLMap(index, a, b, a2, b2){
     if (game.level[index].which === 0) image(player.right, width * a, height * b);
     else image(player.right, width * a2, height * b2);
 }
-
-// draw canvas
+//Main Draw function - Everything is linked to this function
 function draw() {
     // logo
     if (start === false){
@@ -695,7 +721,7 @@ function draw() {
         }
         if (hud.health === 1) {
             if (frameCount % 60 > 30) {                                              // Every 30 frames, triggers between off and on
-                fill(110);
+                fill(0, 0);
                 rect(width * 0.132, height * 0.91, (width * 0.175), height * 0.84);
             }
             else rect(width * 0.132, height * 0.91, (width * 0.175), height * 0.84);
@@ -730,7 +756,28 @@ function draw() {
         Doors();
         GateInfo();
         OrbInfo();
+        if (minigames.Ingame1 === true) {
+            switch (minigames.Type1){
+                case 1: 
+                    StopGhost();
+                    break;
+                case 2: 
+                    TheLight();
+                    break;
+            }
+        }
+        if (minigames.Ingame2 === true) {
+            switch (minigames.Type2){
+                case 1:
+                    StopGhost();
+                    break;
+                case 2:
+                    TheLight();
+                    break;
+            }
+        }
         imageMode(CORNERS);
+        //Open an Orb animation
         if (orb.open === true) {
             pressl = false;
             pressr = false;
@@ -751,6 +798,7 @@ function draw() {
                 OrbHover((width * 0.7), (height * 0.5), width* 0.08, 3, heart.cloned);
             }
         }
+        //Open the Hud animation
         if (maphud.display === true) {
             pressl = false;
             pressr = false;
@@ -796,10 +844,12 @@ function draw() {
                 pop();
             }
         }
+        //Makes the current level viewable on the map, if the player does not have it currently shown
         if (hud.map !== item.mapcountc && game.current < 5) {
             maphud.mapblock[game.current] = false;
             item.mapcountc = hud.map;
         }
+        //Runs MapGen when a level change is detected
         if (game.current !== game.currentc) {
             MapGen();
             orb.opened = false;
@@ -809,6 +859,7 @@ function draw() {
             game.currentc = game.current;
         }
     }
+    //Defeat
     if (lost === true){
         if (fade < 255) {
             WhiteFadeIn();
@@ -840,6 +891,7 @@ function draw() {
             }
         }
     }
+    //Victory
     if (game.victory === true){
         if (fade < 255) WhiteFadeIn();
         else {
@@ -937,30 +989,32 @@ function XYFix(){
 }
 // INTERACTION FUNCTIONS
 
-//Input
+// INPUTS
+
+// Player presses key
 function keyPressed() {
     if (orb.open !== true) {
         switch (keyCode) {
             case LEFT_ARROW:
-                if (maphud.display !== true) {
+                if (maphud.display !== true && minigames.Ingame1 !== true && minigames.Ingame2 !== true) {
                     pressl = true;
                     player.dx = 2;
                 }
                 break;
             case RIGHT_ARROW:
-                if (maphud.display !== true) {
+                if (maphud.display !== true && minigames.Ingame1 !== true && minigames.Ingame2 !== true) {
                     pressr = true;
                     player.dx = -2;
                 }
                 break;
             case DOWN_ARROW:
-                if (maphud.display !== true) {
+                if (maphud.display !== true && minigames.Ingame1 !== true && minigames.Ingame2 !== true) {
                     pressb = true;
                     player.dy = -2;
                 }
                 break;
             case UP_ARROW:
-                if (maphud.display !== true) {
+                if (maphud.display !== true && minigames.Ingame1 !== true && minigames.Ingame2 !== true) {
                     pressf = true;
                     player.dy = 2;
                 }
@@ -972,13 +1026,16 @@ function keyPressed() {
                 }
                 break;
             case TAB:
-                fadepro = 0;
-                maphud.display = maphud.display === true ? false : true;
+                if (minigames.Ingame1 !== true && minigames.Ingame2 !== true) {
+                    fadepro = 0;
+                    maphud.display = maphud.display === true ? false : true;
+                }
                 break;
         }
     }
     return false;
 }
+// Player releases key
 function keyReleased() {
     switch (keyCode) {
         case LEFT_ARROW:
@@ -998,6 +1055,7 @@ function keyReleased() {
             break;
     }
 }
+// Player presses mouse
 function mousePressed(){
     if (orb.b1) {
         orb.open = false;
@@ -1013,6 +1071,9 @@ function mousePressed(){
         orb.open = false;
         if (hud.health < 3) hud.health += 1;
         orb.b3 = false;
+    }
+    if (minigames.FindTrue === false && dist(minigames.FindPos.x, minigames.FindPos.y, mouseX, mouseY) < 30){
+        minigames.FindTrue = true;
     }
 }
 // Mouse Hover On Orb
@@ -1187,6 +1248,7 @@ function MapSize() {
             }
     }
 }
+//Generic function to handle all elements that show text such as "Press space to x"
 function GenericInteraction(input){
     fill(255);
     textSize(20 * (width * 0.0025));
@@ -1198,7 +1260,7 @@ function GenericInteraction(input){
     textSize(12 * (width * 0.0025));
     text("Press Space", width * 0.5, height * 0.75);
 }
-
+//Calls GenericInteraction() when near an unopened orb
 function OrbInfo(){
     if (orb.spawn === true && orb.opened === false){
         if ((dist(game.XO + (game.X / 2), (game.YO + (game.Y/2.25)), width * 0.5, height * 0.65)) < 90) {
@@ -1207,27 +1269,28 @@ function OrbInfo(){
         } else game.o1 = false;
     }
 }
-
+//Calls GenericInteraction() when near an unopened gate
 function GateInfo(){
-    if (game.gates === 1 && player.gate1comp === false){
+    if (game.gates === 1 && player.gate1comp === false && minigames.Ingame1 !== true){
         if ((dist(game.XF - 80, (game.YO + (game.Y/2)) + 70, width * 0.5, height * 0.65)) < 90) {
             GenericInteraction("Open Gate?");
             game.d1 = true;
         } else game.d1 = false;
     }
-    if (game.gates === 2 && player.gate1comp === false){
+    if (game.gates === 2 && player.gate1comp === false && minigames.Ingame1 !== true){
         if ((dist(game.XF - 80, (game.YO + (game.Y/2)) + 70, width * 0.5, height * 0.65)) < 90) {
             GenericInteraction("Open Gate?");
             game.d1 = true;
         } else game.d1 = false;
     }
-    if (game.gates === 2 && player.gate2comp === false){
+    if (game.gates === 2 && player.gate2comp === false && minigames.Ingame2 !== true){
         if ((dist(game.XO + 80, (game.YO + (game.Y/3)) + 70, width * 0.5, height * 0.65)) < 90) {
             GenericInteraction("Open Gate?");
             game.d2 = true;
         } else game.d2 = false;
     }
 }
+//Calls GenericInteraction() when near a portal
 function Doors(){
     if (game.doors === 2) {
         if ((dist(game.XO + (game.X /5), game.YO + 70, width * 0.5, height * 0.65)) < 60) {
@@ -1246,6 +1309,7 @@ function Doors(){
         } else game.exonly = false;
     }
 }
+//Handles all interaction with all GenericInteraction() elements
 function NextLevel() {
     if (game.ex1 === true && player.space === true) {
         game.ex1 = false;
@@ -1289,16 +1353,147 @@ function NextLevel() {
         }
     }
     if (game.d1 === true && player.space === true) {
+        fadepro = 0;
         game.d1 = false;
-        player.gate1comp = true;
+        minigames.Ingame1 = true;
+        pressl = false;
+        pressr = false;
+        pressf = false;
+        pressb = false;
+        minigames.Spamspace = 0;
+        minigames.Count = 0;
     }
     if (game.d2 === true && player.space === true) {
+        fadepro = 0;
         game.d2 = false;
-        player.gate2comp = true;
+        minigames.Ingame2 = true;
+        pressl = false;
+        pressr = false;
+        pressf = false;
+        pressb = false;
+        minigames.Spamspace = 0;
+        minigames.Count = 0;
     }
     if (game.o1 === true && player.space === true) {
         game.o1 = false;
         orb.opened = true;
         orb.open = true;
+        fadepro = 0;
+    }
+}
+
+// MINIGAMES
+
+//Stop the ghost:
+function StopGhost() {
+    DarkFaintFade();
+    if (fadepro >= 210) {
+        push();
+        imageMode(CORNERS);
+        image(minigames.StopGImBack, width * 0.1, height * 0.1, width * 0.9, height * 0.9);
+        noFill()
+        stroke(0)
+        strokeWeight(5)
+        rect(width * 0.1, height * 0.1, width * 0.9, height * 0.9);
+        imageMode(CENTER);
+        tint(255, minigames.StopGSize * 30)
+        image(minigames.StopGIm, width * 0.5, height * 0.5, minigames.StopGIm.width * minigames.StopGSize, minigames.StopGIm.height * minigames.StopGSize)
+        pop();
+        push();
+        fill(255);
+        textSize(20 * (width * 0.0025));
+        textFont('Courier New');
+        fill(255, 100);
+        rect(width * 0.4, height * 0.80, width * 0.6, height * 0.87);
+        fill(0);
+        textSize(12 * (width * 0.0025));
+        text("Spam Space", width * 0.5, height * 0.85);
+        text("Stop The Demon", width * 0.5, height * 0.18);
+        pop();
+        minigames.StopGSize += 0.001
+        if (player.space === true){
+            minigames.Spamspace += 1;
+            minigames.StopGSize -= 0.02;
+            player.space = false;
+        }
+        if (minigames.StopGSize < 0.2){
+            if (minigames.Ingame1) {
+                player.gate1comp = true;
+                minigames.Ingame1 = false;
+                game.d1 = false;
+            }
+            if (minigames.Ingame2) {
+                player.gate2comp = true;
+                minigames.Ingame2 = false;
+                game.d2 = false;
+            }
+            minigames.StopGSize = 0.5;
+        }
+        if (minigames.StopGSize > 0.7) {
+            if (minigames.Ingame1) {
+                minigames.Ingame1 = false;
+                game.d1 = false;
+            }
+            if (minigames.Ingame2) {
+                minigames.Ingame2 = false;
+                game.d2 = false;
+            }
+            hud.health -= 1;
+            minigames.StopGSize = 0.5;
+        }
+    }
+}
+function TheLight() {
+    DarkFaintFade();
+    if (fadepro >= 210) {
+        if (minigames.FindPos === undefined){
+            minigames.FindPos = createVector(Math.floor(Math.random() * width), Math.floor(Math.random() * (height * 0.5) + (height * 0.25)));
+            minigames.FindTrue = false;
+        }
+        push();
+        rectMode(CORNERS);
+        fill(0);
+        stroke(0)
+        strokeWeight(5)
+        rect(0, 0, width, height);
+        pop();
+        push();
+        fill(255, 50);
+        ellipse(mouseX, mouseY, 140, 140);
+        fill(255, 100);
+        ellipse(mouseX, mouseY, 135, 135);
+        fill(255, 150);
+        ellipse(mouseX, mouseY, 130, 130);
+        fill(255, 180);
+        ellipse(mouseX, mouseY, 120, 120);
+        fill(255, 200);
+        ellipse(mouseX, mouseY, 100, 100);
+        fill(255);
+        ellipse(mouseX, mouseY, 80, 80);
+        pop();
+        push();
+        textSize(20 * (width * 0.0025));
+        textFont('Courier New');
+        fill(0);
+        textSize(12 * (width * 0.0025));
+        text("Press Me", width * 0.5, height * 0.85);
+        text("Find Me", width * 0.5, height * 0.18);
+        imageMode(CENTER);
+        image(player.leftdark, minigames.FindPos.x, minigames.FindPos.y);
+        pop();
+        if (minigames.FindTrue){
+            if (minigames.Ingame1) {
+                player.gate1comp = true;
+                minigames.Ingame1 = false;
+                game.d1 = false;
+            }
+            if (minigames.Ingame2) {
+                player.gate2comp = true;
+                minigames.Ingame2 = false;
+                game.d2 = false;
+            }
+            minigames.FindTrue = undefined;
+            minigames.FindPos = undefined;
+        }
     }
 }

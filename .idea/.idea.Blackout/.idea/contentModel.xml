@@ -22,6 +22,10 @@
           <e p="BackOrb.psd" t="Include" />
           <e p="Blackout1.js" t="Include" />
           <e p="BlackoutPage.html" t="Include" />
+          <e p="Door.png" t="Include" />
+          <e p="Door.psd" t="Include" />
+          <e p="doorback.png" t="Include" />
+          <e p="doorback.psd" t="Include" />
           <e p="Eye.png" t="Include" />
           <e p="FinalRing.png" t="Include" />
           <e p="Floor.png" t="Include" />
@@ -43,6 +47,8 @@
           <e p="Health.psd" t="Include" />
           <e p="logo.png" t="Include" />
           <e p="logo.psd" t="Include" />
+          <e p="Love.png" t="Include" />
+          <e p="Love.psd" t="Include" />
           <e p="Map.png" t="Include" />
           <e p="map.psd" t="Include" />
           <e p="MapBackdrop.png" t="Include" />
@@ -61,6 +67,8 @@
           <e p="Minerleft.png" t="Include" />
           <e p="Minerleft.psd" t="Include" />
           <e p="MinerLeft2.png" t="Include" />
+          <e p="MinerLeft2Dark.png" t="Include" />
+          <e p="MinerLeft2dark.psd" t="Include" />
           <e p="Minerright.png" t="Include" />
           <e p="Minerright.psd" t="Include" />
           <e p="MinerRight2.png" t="Include" />
