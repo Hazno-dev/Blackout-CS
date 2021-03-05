@@ -95,7 +95,9 @@ let player = {
     backl: undefined,
     backr: undefined,
     gate1comp: undefined,
-    gate2comp: undefined
+    gate2comp: undefined,
+    collisiony: false,
+    collisionx: false
 }
 class images {
     constructor(original, cloned) {
@@ -139,6 +141,46 @@ let eyes = {
     y1: 0,
     y2: 0
 }
+class Particles {
+    constructor(){
+        this.x = random(0, width);
+        this.y = random(0, height);
+        this.size = random(0.5, 1.5);
+        this.sizeo = this.size;
+        this.speedx = 0;
+        this.speedy = 0;
+        this.fader = false;
+    }
+    MovingUp() {
+        if (this.speedy === 0 || this.speedy < 0) this.speedy = random(5, 6);
+        if (this.y >= 0 && this.y <= height) this.y += this.speedy;
+        else this.y = 0;
+    }
+    MovingDown() {
+        if (this.speedy === 0 || this.speedy > 0) this.speedy = random(-5, -6);
+        if (this.y >= 0 && this.y <= height) this.y += this.speedy;
+        else this.y = height;
+    }
+    MovingLeft() {
+        if (this.speedx === 0 || this.speedx < 0) this.speedx = random(5, 6);
+        if (this.x >= 0 && this.x <= width) this.x += this.speedx;
+        else this.x = 0;
+    }
+    MovingRight() {
+        if (this.speedx === 0 || this.speedx > 0) this.speedx = random(-5, -6);
+        if (this.x >= 0 && this.x <= width) this.x += this.speedx;
+        else this.x = width;
+    }
+    Alternate() {
+        if (this.size < this.sizeo + 1.0 && this.fader === false) this.size += 0.01;
+        else this.fader = true;
+        if (this.size > this.sizeo && this.fader) this.size -= 0.01;
+        else this.fader = false;
+        
+    }
+}
+let particle = [];
+
 // Image Loading - Sets all needed files and images to variables
 function preload() {
     player.for = loadImage('MinerForward.png');
@@ -186,7 +228,7 @@ function preload() {
 // Create Canvas - Creates the canvas
 function setup() {
     canv = createCanvas(windowWidth/2, windowHeight/1.8);
-    canv.position(windowWidth/4, windowHeight*0.3);
+    canv.position(windowWidth/4, windowHeight*0.4);
     button = createButton('Start Game');
     button.position(width*0.9, height * 1.2);
     button.size(200,50);
@@ -196,6 +238,9 @@ function setup() {
     button.mousePressed(buttonstart);
     heart.cloned.resize(width * 0.07, height * 0.13);
     map.cloned.resize(width * 0.07, height * 0.13);
+    for (let i = 0; i < 20; i++){
+        particle.push(new Particles());
+    }
     frameRate(60);
 }
 //Start Button
@@ -351,8 +396,8 @@ function RandomGen() {
 //Map Drawing - Called in Draw() and will draw the map aswell as calling functions for drawing Gates, Orbs and Portals
 function MapAndBorders(){
     fill(14, 99);
-    imageMode(CORNER);
-    image(backdrop, width * 0.013, height * 0.023);
+    imageMode(CORNERS);
+    image(backdrop, width * 0.01, height * 0.023, width * 0.990, height * 1.5);
     if (game.final) final();
     imageMode(CORNERS);
     if (game.name === "intro") image(floor.one, game.XO, game.YO, game.XF, game.YF);
@@ -545,6 +590,20 @@ function Eyes(){
     if (eyes.y1 < height/2) eyes.y1 += 5;
     if (eyes.y2 > height/2) eyes.y2 -= 1;
 }
+function ParticleSys(){
+    for (let i = 0; i < particle.length; i++){
+        push()
+        rectMode(CENTER);
+        fill(255, (dist((width * 0.5), (height * 0.6), particle[i].x, particle[i].y)) / 2.5);
+        square(particle[i].x, particle[i].y, particle[i].size * 3);
+        if (player.dx === 2 && player.collisionx === false) particle[i].MovingLeft();
+        if (player.dx === -2 && player.collisionx === false) particle[i].MovingRight();
+        if (player.dy === 2 && player.collisiony === false) particle[i].MovingUp();
+        if (player.dy === -2 && player.collisiony === false) particle[i].MovingDown();
+        particle[i].Alternate();
+        pop()
+    }
+}
 //Intro Sequence Fall Function
 function fall(){
     fill(255);
@@ -675,6 +734,8 @@ function draw() {
         }
         if (game.YO + (game.Y/2) >= height * 0.5 && player.gate1comp === true && game.gates === 1) GatesDraw1();
         if (game.YO + (game.Y/2) >= height * 0.5 && player.gate1comp === true && game.gates === 2) GatesDraw21();
+        noStroke();
+        ParticleSys();
         imageMode(CENTER);
         stroke(110);
         strokeCap(SQUARE);
@@ -1181,18 +1242,22 @@ function MapSize() {
     if (game.XO > width * 0.5) {
         game.XO = width * 0.5;
         game.XF = game.XO + game.X;
-    }
+        player.collisionx = true;
+    } else player.collisionx = false;
     if (game.XF < width * 0.5) {
         game.XF = width * 0.5;
         game.XO = game.XF - game.X;
+        player.collisionx = true;
     }
     if (game.YO > height * 0.6) {
         game.YO = height * 0.6;
         game.YF = game.YO + game.Y;
-    }
+        player.collisiony = true;
+    } else player.collisiony = false;
     if (game.YF < height * 0.64) {
         game.YF = height * 0.64;
         game.YO = game.YF - game.Y;
+        player.collisiony = true;
     }
     switch (game.gates){
         case 1: 
@@ -1200,16 +1265,19 @@ function MapSize() {
                 if(game.YO + (game.Y/2) > height * 0.5){
                     game.YO = (height * 0.5) - (game.Y/2);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
             }
             if (player.gate1comp === true) {
                 if (game.YO + (game.Y / 1.97) > height * 0.5 && game.YO + (game.Y / 2.03) < height * 0.5 && game.XO + (game.X - 150) > width * 0.5) {
                     game.YO = (height * 0.5) - (game.Y / 1.97);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
                 if (game.YO + (game.Y / 2.03) > height * 0.5 && game.YO + (game.Y / 2.08) < height * 0.5 && game.XO + (game.X - 150) > width * 0.5) {
                     game.YO = (height * 0.5) - (game.Y / 2.08);
-                    game.YF = game.YO + game.Y; 
+                    game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
             }
             break;
@@ -1218,32 +1286,38 @@ function MapSize() {
                 if(game.YO + (game.Y/2) > height * 0.5){
                     game.YO = (height * 0.5) - (game.Y/2);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
             }
             if (player.gate1comp === true) {
                 if (game.YO + (game.Y / 1.97) > height * 0.5 && game.YO + (game.Y / 2.03) < height * 0.5 && game.XO + (game.X - 150) > width * 0.5) {
                     game.YO = (height * 0.5) - (game.Y / 1.97);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
                 if (game.YO + (game.Y / 2.03) > height * 0.5 && game.YO + (game.Y / 2.08) < height * 0.5 && game.XO + (game.X - 150) > width * 0.5) {
                     game.YO = (height * 0.5) - (game.Y / 2.08);
                     game.YF = game.YO + game.Y;
-                }
+                    player.collisiony = true;
+                } 
             }
             if (player.gate2comp === false){
                 if(game.YO + (game.Y/3) > height * 0.5){
                     game.YO = (height * 0.5) - (game.Y/3);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
             }
             if (player.gate2comp === true) {
                 if (game.YO + (game.Y / 2.97) > height * 0.5 && game.YO + (game.Y / 3.03) < height * 0.5 && game.XF - (game.X - 150) < width * 0.5) {
                     game.YO = (height * 0.5) - (game.Y / 2.97);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
                 if (game.YO + (game.Y / 3.03) > height * 0.5 && game.YO + (game.Y / 3.20) < height * 0.5 && game.XF - (game.X - 150) < width * 0.5) {
                     game.YO = (height * 0.5) - (game.Y / 3.20);
                     game.YF = game.YO + game.Y;
+                    player.collisiony = true;
                 }
             }
     }
@@ -1396,7 +1470,7 @@ function StopGhost() {
         strokeWeight(5)
         rect(width * 0.1, height * 0.1, width * 0.9, height * 0.9);
         imageMode(CENTER);
-        tint(255, minigames.StopGSize * 30)
+        tint(255, minigames.StopGSize * 60)
         image(minigames.StopGIm, width * 0.5, height * 0.5, minigames.StopGIm.width * minigames.StopGSize, minigames.StopGIm.height * minigames.StopGSize)
         pop();
         push();

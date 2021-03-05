@@ -2,18 +2,15 @@
     font-family: "Courier New", sans-serif;
     background-color: dimgray;
     background-image: url("Background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 header{
-    background-color: black;
+    background-color: white;
     margin: auto;
-    color: grey;
-    animation: h1colour 4s infinite alternate;
+    color: black;
     text-align: center;
     font-size: 40px;
-}
-@keyframes h1colour {
-    from {background-color: black;}
-    to {background-color: white;}
 }
 .info{
     height: 100px;
@@ -36,4 +33,54 @@ h3{
 }
 h3.clicked{
     color: red;
+}
+.Intro1 {
+    position:relative;
+    line-height:2em;
+    overflow:hidden;
+    width:700px;
+    margin:0 auto;
+    animation-name: showHide;
+    animation-duration: 2s;
+}
+.Intro2 {
+    position:relative;
+    line-height:2em;
+    overflow:hidden;
+    width:500px;
+    margin:0 auto;
+    animation-name: showHide2;
+    animation-duration: 4s;
+}
+.Github{
+    position: relative;
+}
+.Github img {
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    top: -60px;
+    left: 600px;
+    animation-name: showHide2;
+    animation-duration: 6s;
+}
+
+@keyframes showHide {
+    0% {opacity:0}
+    40% {opacity:0.2}
+    60% {opacity:0.4}
+    100% {opacity:1}
+}
+@keyframes showHide2 {
+    0% {opacity:0}
+    40% {opacity:0}
+    60% {opacity:0.4}
+    100% {opacity:1}
+}
+@keyframes showHide3 {
+    0% {opacity:0}
+    40% {opacity:0}
+    60% {opacity:0}
+    80% {opacity:0.2}
+    100% {opacity:1}
 }
