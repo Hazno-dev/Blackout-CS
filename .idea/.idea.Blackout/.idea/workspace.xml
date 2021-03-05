@@ -22,13 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="366cac9c-8d18-4b81-9b14-20c34d8c170f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blackout/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blackout/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blackout/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blackout/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blackout/Blackout/Blackout1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Blackout/Blackout/Blackout1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blackout/Blackout/BlackoutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/Blackout/Blackout/BlackoutPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blackout/Blackout/StyleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/Blackout/Blackout/StyleSheet.css" afterDir="false" />
-    </list>
+    <list default="true" id="366cac9c-8d18-4b81-9b14-20c34d8c170f" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,18 +42,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Blackout/Blackout/Maps.json" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Blackout/Blackout/Data.json" />
-        <option value="$PROJECT_DIR$/Blackout/Blackout/Maps.json" />
-        <option value="$PROJECT_DIR$/Blackout/Blackout/Puzzles.js" />
-        <option value="$PROJECT_DIR$/Blackout/Blackout/Blackout1.js" />
-        <option value="$PROJECT_DIR$/Blackout/Blackout/BlackoutPage.html" />
-        <option value="$PROJECT_DIR$/Blackout/Blackout/StyleSheet.css" />
-      </list>
-    </option>
-  </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
@@ -76,6 +58,7 @@
     <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.30010834" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -166,6 +149,7 @@
       <workItem from="1611503899889" duration="7612000" />
       <workItem from="1611585929754" duration="1795000" />
       <workItem from="1611670279078" duration="578000" />
+      <workItem from="1614976664847" duration="640000" />
     </task>
     <servers />
   </component>

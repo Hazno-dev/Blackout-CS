@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Callum\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Callum\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Blackout.-1467167267.00" t="ExcludeRecursive" />
-    <e p="C:\Users\Callum\AppData\Roaming\JetBrains\Rider2020.2\javascript\extLibs\global-types\node_modules\@types\jquery" t="IncludeRecursive" />
-    <e p="C:\Users\Callum\AppData\Roaming\JetBrains\Rider2020.2\javascript\extLibs\global-types\node_modules\@types\p5" t="IncludeRecursive" />
-    <e p="C:\Users\Callum\AppData\Roaming\JetBrains\Rider2020.2\javascript\extLibs\http_cdn.jsdelivr.net_npm_p5@1.1.9_lib_p5.js" t="IncludeRecursive" />
-    <e p="C:\Users\Callum\AppData\Roaming\JetBrains\Rider2020.2\javascript\extLibs\http_pagecdn.io_lib_p5_1.1.9_addons_p5.sound.js" t="IncludeRecursive" />
-    <e p="C:\Users\Callum\Desktop\Github\Blackout-CS" t="IncludeFlat">
+    <e p="C:\Users\callu\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\callu\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Blackout.2129215152.00" t="ExcludeRecursive" />
+    <e p="C:\Users\callu\AppData\Roaming\JetBrains\Rider2020.3\javascript\extLibs\global-types\node_modules\@types\p5" t="IncludeRecursive" />
+    <e p="C:\Users\callu\OneDrive\Desktop\Github\Blackout-CS" t="IncludeFlat">
       <e p="Blackout" t="IncludeRecursive">
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
