@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title>Blackout</title>
     <link href="StyleSheet.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"></script>
-    <script src="p5.sound.min.js"></script>
+    <script src="p5.js"></script>
+    <script src="p5.sound.js"></script>
 </head>
 <body>
 <!-- Tab links -->
@@ -21,11 +21,25 @@
             <img src="GitHub-Mark-64px.png" width="64" height="64" alt="Github Link">
         </div>
     </a>
+    <div id="overlay" onclick="off()"><div class="tutorial"><img src="Tutorial.png" width="1200" height="600" alt="Tutorial"></div></div>
+    
+    <div style="padding:20px; position: absolute; left: 44%; ">
+        <button onclick="on()"><img src="TutorialIcon.png" width="200" height="80" alt="Tutorial"></button>
+    </div>
     <script>
         function Click(node) {
             var value = node.getAttribute('class') || '';
             value = value === '' ? 'clicked' : '';
             node.setAttribute('class', value);
+        }
+    </script>
+    <script>
+        function on() {
+            document.getElementById("overlay").style.display = "block";
+        }
+    
+        function off() {
+            document.getElementById("overlay").style.display = "none";
         }
     </script>
     <script src="Blackout1.js"></script>

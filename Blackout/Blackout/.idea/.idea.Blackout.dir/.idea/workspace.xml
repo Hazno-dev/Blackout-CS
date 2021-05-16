@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d3d267ed-31ae-457d-b497-a5a0db908070" name="Default Changelist" comment="" />
+    <list default="true" id="d3d267ed-31ae-457d-b497-a5a0db908070" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.idea/.idea.Blackout/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/.idea.Blackout/.idea/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/.idea.Blackout/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/.idea.Blackout/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Blackout.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blackout1.js" beforeDir="false" afterPath="$PROJECT_DIR$/Blackout1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BlackoutPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/BlackoutPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StyleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/StyleSheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/p5.sound.js" beforeDir="false" afterPath="$PROJECT_DIR$/p5.sound.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../obj/Debug/netcoreapp3.1/Blackout.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../obj/Debug/netcoreapp3.1/Blackout.csprojAssemblyReference.cache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,6 +22,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="IdeDocumentHistory">
+    <changedPaths>
+      <option value="$PROJECT_DIR$/StyleSheet.css" />
+      <option value="$PROJECT_DIR$/BlackoutPage.html" />
+      <option value="$PROJECT_DIR$/Blackout1.js" />
+    </changedPaths>
+  </component>
   <component name="ProjectId" id="1pLy5WiCt18NmHM65dKdKMLaSmu" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -17,11 +36,29 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="liveEdit" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="BlackoutPage.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Blackout/BlackoutPage.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.BlackoutPage.html" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -32,13 +69,17 @@
       <option name="presentableId" value="Default" />
       <updated>1614976484582</updated>
       <workItem from="1614976485592" duration="153000" />
+      <workItem from="1620838022037" duration="10176000" />
+      <workItem from="1620916131313" duration="11283000" />
+      <workItem from="1621004156036" duration="14739000" />
+      <workItem from="1621098879159" duration="9843000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

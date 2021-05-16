@@ -1,4 +1,6 @@
-﻿//Variables
+﻿//HTML ELEMENTS
+
+//Variables
 let counter = 0;
 let angle = {
     one: 0,
@@ -11,6 +13,7 @@ let finalfade = {
     one: 0,
     two: 0
 }
+let changelevel = false;
 let floor = {
     one: undefined,
     two: undefined,
@@ -46,7 +49,14 @@ let minigames = {
     Count: 0,
     StopGSize: 0.5,
     FindPos: undefined,
-    FindTrue: undefined
+    FindTrue: undefined,
+    PianoBack: undefined,
+    PianoNote: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    PianoCorrect: "",
+    PianoInput: "",
+    PianoIntro: false,
+    PianoDelay: 0,
+    PianoCount: 0
 }
 let item = {
     mapcountc: 0
@@ -81,7 +91,8 @@ let game = {
     finalsky: undefined,
     finallook: undefined,
     victory: false,
-    name: undefined
+    name: undefined,
+    fog: undefined
 }
 let player = {
     dx: 0,
@@ -140,6 +151,25 @@ let canv;
 let eyes = {
     y1: 0,
     y2: 0
+}
+let music = {
+    theme: undefined,
+    powerup: undefined,
+    doorgood: undefined,
+    doorbad: undefined,
+    minigame: undefined,
+    hurt: undefined,
+    end: undefined,
+    one: undefined,
+    two: undefined,
+    three: undefined,
+    four: undefined,
+    five: undefined,
+    six: undefined,
+    seven: undefined,
+    eight: undefined,
+    dooropen: undefined,
+    flame: undefined
 }
 class Particles {
     constructor(){
@@ -223,6 +253,26 @@ function preload() {
     minigames.StopGIm = loadImage('Love.png');
     minigames.StopGImBack = loadImage('doorback.png');
     player.leftdark = loadImage('MinerLeft2Dark.png');
+    minigames.PianoBack = loadImage('Piano.png');
+    game.fog = loadImage('Fog.png');
+    soundFormats('wav');
+    music.theme = loadSound('backmusic');
+    music.powerup = loadSound('powerup');
+    music.doorgood = loadSound('portalgood');
+    music.doorbad = loadSound('portalbad');
+    music.minigame = loadSound('minigame');
+    music.hurt = loadSound('hurt');
+    music.end = loadSound('end');
+    music.one = loadSound('1');
+    music.two = loadSound('2');
+    music.three = loadSound('3');
+    music.four = loadSound('4');
+    music.five = loadSound('5');
+    music.six = loadSound('6');
+    music.seven = loadSound('7');
+    music.eight = loadSound('8');
+    music.dooropen = loadSound('dooropen');
+    music.flame = loadSound('fire');
     data = loadJSON('Maps.json');
 }
 // Create Canvas - Creates the canvas
@@ -241,7 +291,7 @@ function setup() {
     for (let i = 0; i < 20; i++){
         particle.push(new Particles());
     }
-    frameRate(60);
+    frameRate(50);
 }
 //Start Button
 function buttonstart() {
@@ -255,13 +305,16 @@ function buttonstart() {
 //Restart Button
 function restartmatch() {
     restart.button.hide();
+    game.victory = false;
     transition = true;
     start = undefined;
     lost = false;
     hud.map = 0;
     hud.torches = 1;
     hud.health = 3;
+    hud.blackout = 30;
     game.final = false;
+    if (music.end.isPlaying()) music.end.stop();
     RandomGen();
 }
 //Map Generation
@@ -278,7 +331,7 @@ function MapGen() {
             game.gates = 1;
             player.gate1comp = false;
             game.name = data.rooms[0].name;
-            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type1 = Math.floor(Math.random() * 3) + 1;
             break;
         case 1:
             game.X = game.level[0].x;
@@ -290,8 +343,8 @@ function MapGen() {
             game.doors = game.level[0].doors;
             game.gates = game.level[0].gates;
             game.name = game.level[0].name;
-            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
-            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type1 = Math.floor(Math.random() * 3) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 3) + 1;
             break;
         case 2:
             game.X = game.level[1].x;
@@ -303,8 +356,8 @@ function MapGen() {
             game.doors = game.level[1].doors;
             game.gates = game.level[1].gates;
             game.name = game.level[1].name;
-            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
-            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type1 = Math.floor(Math.random() * 3) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 3) + 1;
             break;
         case 3:
             game.X = game.level[2].x;
@@ -316,8 +369,8 @@ function MapGen() {
             game.doors = game.level[2].doors;
             game.gates = game.level[2].gates;
             game.name = game.level[2].name;
-            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
-            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type1 = Math.floor(Math.random() * 3) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 3) + 1;
             break;
         case 4:
             game.X = game.level[3].x;
@@ -329,8 +382,8 @@ function MapGen() {
             game.doors = game.level[3].doors;
             game.gates = game.level[3].gates;
             game.name = game.level[3].name;
-            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
-            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type1 = Math.floor(Math.random() * 3) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 3) + 1;
             break;
         case 5:
             game.X = game.level[4].x;
@@ -342,8 +395,8 @@ function MapGen() {
             game.doors = 1
             game.gates = game.level[4].gates;
             game.name = game.level[4].name;
-            minigames.Type1 = Math.floor(Math.random() * 2) + 1;
-            minigames.Type2 = Math.floor(Math.random() * 2) + 1;
+            minigames.Type1 = Math.floor(Math.random() * 3) + 1;
+            minigames.Type2 = Math.floor(Math.random() * 3) + 1;
             break;
         case 6:
             game.X = (data.rooms[7].x);
@@ -393,6 +446,21 @@ function RandomGen() {
     }
     pop();
 }*/
+function doorstars(x, y, radius1, radius2, npoints) {
+    let angle = TWO_PI / npoints;
+    let halfAngle = angle / 2.0;
+    beginShape();
+    for (let a = 0; a < TWO_PI; a += angle) {
+        let sx = x + cos(a) * radius2;
+        let sy = y + sin(a) * radius2;
+        vertex(sx, sy);
+        sx = x + cos(a + halfAngle) * radius1;
+        sy = y + sin(a + halfAngle) * radius1;
+        vertex(sx, sy);
+    }
+    endShape(CLOSE);
+}
+
 //Map Drawing - Called in Draw() and will draw the map aswell as calling functions for drawing Gates, Orbs and Portals
 function MapAndBorders(){
     fill(14, 99);
@@ -413,6 +481,26 @@ function MapAndBorders(){
         fill(0)
         if (game.doors === 2) {
             //pulseeffect((game.XO + (game.X /5)), game.YO + 70, color(0));
+            push();
+            translate((game.XO + (game.X / 5)), game.YO + 70);
+            rotate(frameCount / 50.0);
+            doorstars(0, 0, 10, 45, 50);
+            pop();
+            push();
+            translate((game.XO + (game.X / 5)), game.YO + 70);
+            rotate(frameCount / -10.0);
+            doorstars(0, 0, 10, 55, 50);
+            pop();
+            push();
+            translate((game.XF - (game.X / 5)), game.YO + 70);
+            rotate(frameCount / 50.0);
+            doorstars(0, 0, 10, 45, 50);
+            pop();
+            push();
+            translate((game.XF - (game.X / 5)), game.YO + 70);
+            rotate(frameCount / -10.0);
+            doorstars(0, 0, 10, 55, 50);
+            pop();
             circle((game.XO + (game.X / 5)), game.YO + 70, 65);
             circle((game.XF - (game.X / 5)), game.YO + 70, 65);
             circle((game.XO + (game.X / 5)), game.YO + 70, 60);
@@ -433,6 +521,16 @@ function MapAndBorders(){
             circle((game.XF - (game.X / 5)), game.YO + 70, 70);
         }
         if (game.doors === 1) {
+            push();
+            translate((game.XO + (game.X / 2)), game.YO + 70);
+            rotate(frameCount / 50.0);
+            doorstars(0, 0, 10, 45, 50);
+            pop();
+            push();
+            translate((game.XO + (game.X / 2)), game.YO + 70);
+            rotate(frameCount / -10.0);
+            doorstars(0, 0, 10, 55, 50);
+            pop();
             circle((game.XO + (game.X / 2)), game.YO + 70, 65);
             circle((game.XO + (game.X / 2)), game.YO + 70, 60);
             stroke(190, 80);
@@ -555,6 +653,12 @@ function DarkFadeIn() {
     rect(0, 0, width, height);
     if (fadedark < 255) fadedark++;
 }
+function DarkFadeIn2() {
+    fill(0, fadedark);
+    rectMode(CORNERS);
+    rect(0, 0, width, height);
+    if (fadedark < 255) fadedark += 10;
+}
 function WhiteFadeIn(){
     fill(255, 255, 255, fade);
     rectMode(CORNERS);
@@ -604,6 +708,12 @@ function ParticleSys(){
         pop()
     }
 }
+function Fog(){
+    push();
+    imageMode(CENTER);
+    image(game.fog, width * 0.45, height * 0.5, 4000 + ((hud.blackout - 30) * 80), 4000 + ((hud.blackout - 30) * 80));
+    pop();
+}
 //Intro Sequence Fall Function
 function fall(){
     fill(255);
@@ -636,6 +746,8 @@ function CurrentLMap(index, a, b, a2, b2){
 //Main Draw function - Everything is linked to this function
 function draw() {
     // logo
+    if (start && !music.theme.isLooping()) music.theme.loop(0, 1, 0.2);
+    else if (!start && music.theme.isLooping()) music.theme.stop();
     if (start === false){
         background(0);
         imageMode(CENTER);
@@ -662,6 +774,7 @@ function draw() {
             textAlign(CENTER)
             textFont('Courier New')
             text('A Young Miner Falls Into A Cave...', width/2, height/4);
+            text('P to skip', width/1.2, height/8);
             WhiteFadeOut(0, 0, width, height);
             if (fade === 0){
                 intro[1] = false;
@@ -710,6 +823,7 @@ function draw() {
                 game.currentc = 0;
                 MapGen();
                 intro[5] = false;
+                intro[0] = false;
                 clear();
                 start = true;
             }
@@ -717,6 +831,57 @@ function draw() {
     }
     //Main Game Sequence
     if (start) {
+        if (frameCount % 60 === 0 && hud.blackout > 0) hud.blackout--;
+        if (hud.blackout === 0 && hud.torches === 0){
+            restart.createb = false;
+            lost = true;
+            start = null;
+            eyes.y1 = 0;
+            eyes.y2 = height;
+            fade = 0;
+            music.doorbad.play(0, 1, 0.3);
+            if (minigames.Ingame1) {
+                minigames.Ingame1 = false;
+                game.d1 = false;
+                minigames.PianoInput = "";
+                minigames.PianoCorrect = "";
+                minigames.PianoCount = 0;
+                minigames.PianoIntro = false;
+                minigames.PianoNote[1] = 0;
+                minigames.PianoNote[2] = 0;
+                minigames.PianoNote[3] = 0;
+                minigames.PianoNote[4] = 0;
+                minigames.PianoNote[5] = 0;
+                minigames.PianoNote[6] = 0;
+                minigames.PianoNote[7] = 0;
+                minigames.PianoNote[8] = 0;
+                minigames.PianoDelay = 0;
+                minigames.StopGSize = 0.5;
+            }
+            if (minigames.Ingame2) {
+                minigames.Ingame2 = false;
+                game.d2 = false;
+                minigames.PianoInput = "";
+                minigames.PianoCorrect = "";
+                minigames.PianoCount = 0;
+                minigames.PianoIntro = false;
+                minigames.PianoNote[1] = 0;
+                minigames.PianoNote[2] = 0;
+                minigames.PianoNote[3] = 0;
+                minigames.PianoNote[4] = 0;
+                minigames.PianoNote[5] = 0;
+                minigames.PianoNote[6] = 0;
+                minigames.PianoNote[7] = 0;
+                minigames.PianoNote[8] = 0;
+                minigames.PianoDelay = 0;
+                minigames.StopGSize = 0.5;
+            }
+        }
+        else if (hud.blackout === 0 && hud.torches > 0){
+            hud.torches--;
+            hud.blackout = 30;
+            music.flame.play(0, 1, 0.3);
+        }
         XYFix();
         //Draw Layout
         rectMode(CORNERS);
@@ -736,6 +901,7 @@ function draw() {
         if (game.YO + (game.Y/2) >= height * 0.5 && player.gate1comp === true && game.gates === 2) GatesDraw21();
         noStroke();
         ParticleSys();
+        Fog();
         imageMode(CENTER);
         stroke(110);
         strokeCap(SQUARE);
@@ -813,7 +979,7 @@ function draw() {
         fill(255);
         rect(width * 0.575, height * 0.915, width * 0.945, height * 0.835);
         fill(0);
-        rect(width * 0.58, height * 0.905, ((width * 0.94) - (hud.blackout * 11.52)), height * 0.845);
+        rect(width * 0.58, height * 0.905, ((width * 0.58) + (hud.blackout * (width * 0.012))), height * 0.845);
         Doors();
         GateInfo();
         OrbInfo();
@@ -825,6 +991,9 @@ function draw() {
                 case 2: 
                     TheLight();
                     break;
+                case 3:
+                    Piano();
+                    break;
             }
         }
         if (minigames.Ingame2 === true) {
@@ -834,6 +1003,9 @@ function draw() {
                     break;
                 case 2:
                     TheLight();
+                    break;
+                case 3:
+                    Piano();
                     break;
             }
         }
@@ -905,6 +1077,14 @@ function draw() {
                 pop();
             }
         }
+        if (changelevel){
+            if (fadedark < 255) DarkFadeIn2();
+            else {
+                game.current += 1;
+                changelevel = false;
+                fadedark = 0;
+            }
+        }
         //Makes the current level viewable on the map, if the player does not have it currently shown
         if (hud.map !== item.mapcountc && game.current < 5) {
             maphud.mapblock[game.current] = false;
@@ -918,6 +1098,16 @@ function draw() {
             player.gate1comp = false;
             player.gate2comp = false;
             game.currentc = game.current;
+        }
+        //Defeat Condition
+        if (hud.health === 0) {
+            restart.createb = false;
+            lost = true;
+            start = null;
+            eyes.y1 = 0;
+            eyes.y2 = height;
+            fade = 0;
+            music.doorbad.play(0, 1, 0.3);
         }
     }
     //Defeat
@@ -957,6 +1147,8 @@ function draw() {
         if (fade < 255) WhiteFadeIn();
         else {
             if (game.final) {
+                music.theme.stop();
+                music.end.play(0, 1, 0.2);
                 game.final = false;
                 start = undefined;
                 counter = 0;
@@ -1092,6 +1284,23 @@ function keyPressed() {
                     maphud.display = maphud.display === true ? false : true;
                 }
                 break;
+            case 80:
+                if (intro[0]){
+                    orb.spawn = true;
+                    orb.opened = false;
+                    game.current = 0;
+                    game.currentc = 0;
+                    MapGen();
+                    intro[5] = false;
+                    intro[4] = false;
+                    intro[3] = false;
+                    intro[2] = false;
+                    intro[1] = false;
+                    intro[0] = false;
+                    clear();
+                    start = true;
+                }
+                break;
         }
     }
     return false;
@@ -1135,6 +1344,50 @@ function mousePressed(){
     }
     if (minigames.FindTrue === false && dist(minigames.FindPos.x, minigames.FindPos.y, mouseX, mouseY) < 30){
         minigames.FindTrue = true;
+    }
+    if (minigames.Ingame1 || minigames.Ingame2) {
+        for (let i = 1; i < 9; i++) {
+            if (minigames.PianoNote[i] === 1) {
+                switch (i) {
+                    case 1:
+                        music.one.play();
+                        break;
+                    case 2:
+                        music.two.play();
+                        break;
+                    case 3:
+                        music.three.play();
+                        break;
+                    case 4:
+                        music.four.play();
+                        break;
+                    case 5:
+                        music.five.play();
+                        break;
+                    case 6:
+                        music.six.play();
+                        break;
+                    case 7:
+                        music.seven.play();
+                        break;
+                    case 8:
+                        music.eight.play();
+                        break;
+                }
+                minigames.PianoNote[i] = 2;
+                minigames.PianoInput += String(i);
+                minigames.PianoCount++;
+            }
+        }
+    }
+}
+function mouseReleased() {
+    if (minigames.Ingame1 || minigames.Ingame2) {
+        for (let i = 1; i < 9; i++) {
+            if (minigames.PianoNote[i] === 2) {
+                minigames.PianoNote[i] = 1;
+            }
+        }
     }
 }
 // Mouse Hover On Orb
@@ -1389,8 +1642,11 @@ function NextLevel() {
         game.ex1 = false;
         player.space = false;
         if (game.current < 5) {
-            if (game.level[game.current].which === 0) {
-                game.current += 1;
+            if (game.level[game.current].which === 0) { 
+                changelevel = true;
+                fadedark = 0;
+                music.doorgood.play(0, 1, 0.3);
+                hud.blackout = 30;
             }
             else {
                 restart.createb = false;
@@ -1399,6 +1655,7 @@ function NextLevel() {
                 eyes.y1 = 0;
                 eyes.y2 = height;
                 fade = 0;
+                music.doorbad.play(0, 1, 0.3);
             }
         }
     }
@@ -1407,7 +1664,10 @@ function NextLevel() {
         player.space = false;
         if (game.current < 5) {
             if (game.level[game.current].which === 1) {
-                game.current += 1;
+                changelevel = true;
+                fadedark = 0;
+                music.doorgood.play(0, 1, 0.3);
+                hud.blackout = 30;
             }
             else {
                 restart.createb = false;
@@ -1416,6 +1676,7 @@ function NextLevel() {
                 eyes.y1 = 0;
                 eyes.y2 = height;
                 fade = 0;
+                music.doorbad.play(0, 1, 0.3);
             }
         }
     }
@@ -1423,7 +1684,9 @@ function NextLevel() {
         game.exonly = false;
         player.space = false;
         if (game.current < 7) {
-            game.current += 1;
+            changelevel = true;
+            fadedark = 0;
+            music.doorgood.play(0, 1, 0.3);
         }
     }
     if (game.d1 === true && player.space === true) {
@@ -1436,6 +1699,7 @@ function NextLevel() {
         pressb = false;
         minigames.Spamspace = 0;
         minigames.Count = 0;
+        music.minigame.play(0, 1, 0.1);
     }
     if (game.d2 === true && player.space === true) {
         fadepro = 0;
@@ -1447,17 +1711,33 @@ function NextLevel() {
         pressb = false;
         minigames.Spamspace = 0;
         minigames.Count = 0;
+        music.minigame.play(0, 1, 0.1);
     }
     if (game.o1 === true && player.space === true) {
         game.o1 = false;
         orb.opened = true;
         orb.open = true;
         fadepro = 0;
+        music.powerup.play(0, 1, 0.3);
     }
 }
 
 // MINIGAMES
-
+function PianoNotes(PositionX, PositionY, which){
+    push();
+    imageMode(CENTER);
+    rectMode(CENTER);
+    if (minigames.PianoNote[which] === 1) fill(100)
+    else if (minigames.PianoNote[which] === 2) fill(200)
+    else if (minigames.PianoNote[which] === 3) fill(0)
+    else fill (255)
+    strokeWeight(0)
+    rect(PositionX, PositionY + height*0.009, width/12.5, height*0.519);
+    if (minigames.PianoIntro && mouseX > PositionX - (width/12.5)/2 && mouseX < PositionX + (width/12.5)/2 && mouseY > PositionY - (height*0.519)/2 && mouseY < PositionY + (height*0.519)/2){
+        if (minigames.PianoNote[which] !== 2) minigames.PianoNote[which] = 1;
+    } else if (minigames.PianoIntro) minigames.PianoNote[which] = 0;
+    pop();
+}
 //Stop the ghost:
 function StopGhost() {
     DarkFaintFade();
@@ -1495,11 +1775,13 @@ function StopGhost() {
                 player.gate1comp = true;
                 minigames.Ingame1 = false;
                 game.d1 = false;
+                music.dooropen.play(0, 1, 0.3);
             }
             if (minigames.Ingame2) {
                 player.gate2comp = true;
                 minigames.Ingame2 = false;
                 game.d2 = false;
+                music.dooropen.play(0, 1, 0.3);
             }
             minigames.StopGSize = 0.5;
         }
@@ -1513,12 +1795,13 @@ function StopGhost() {
                 game.d2 = false;
             }
             hud.health -= 1;
+            music.hurt.play(0, 1, 0.3);
             minigames.StopGSize = 0.5;
         }
     }
 }
 function TheLight() {
-    DarkFaintFade();
+    DarkFaintFade(); 
     if (fadepro >= 210) {
         if (minigames.FindPos === undefined){
             minigames.FindPos = createVector(Math.floor(Math.random() * width), Math.floor(Math.random() * (height * 0.5) + (height * 0.25)));
@@ -1560,14 +1843,418 @@ function TheLight() {
                 player.gate1comp = true;
                 minigames.Ingame1 = false;
                 game.d1 = false;
+                music.dooropen.play(0, 1, 0.3);
             }
             if (minigames.Ingame2) {
                 player.gate2comp = true;
                 minigames.Ingame2 = false;
                 game.d2 = false;
+                music.dooropen.play(0, 1, 0.3);
             }
             minigames.FindTrue = undefined;
             minigames.FindPos = undefined;
         }
+    }
+}
+function Piano() {
+    DarkFaintFade();
+    if (fadepro >= 210) {
+        if (minigames.PianoIntro === false) {
+            if (minigames.PianoDelay === 60) {
+                let first = Math.floor(Math.random() * 8) + 1
+                minigames.PianoCorrect += String(first); 
+                switch (first){
+                    case 1: 
+                        music.one.play();
+                        minigames.PianoNote[1] = 3;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 2:
+                        music.two.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 3;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 3:
+                        music.three.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 3;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 4:
+                        music.four.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 3;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 5:
+                        music.five.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 3;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 6:
+                        music.six.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 3;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 7:
+                        music.seven.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 3;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 8:
+                        music.eight.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 3;
+                        break;
+                }
+            }
+            if (minigames.PianoDelay === 120) {
+                let first = Math.floor(Math.random() * 8) + 1
+                minigames.PianoCorrect += String(first);
+                switch (first){
+                    case 1:
+                        music.one.play();
+                        minigames.PianoNote[1] = 3;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 2:
+                        music.two.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 3;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 3:
+                        music.three.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 3;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 4:
+                        music.four.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 3;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 5:
+                        music.five.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 3;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 6:
+                        music.six.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 3;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 7:
+                        music.seven.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 3;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 8:
+                        music.eight.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 3;
+                        break;
+                }
+            }
+            if (minigames.PianoDelay === 180) {
+                let first = Math.floor(Math.random() * 8) + 1
+                minigames.PianoCorrect += String(first);
+                switch (first){
+                    case 1:
+                        music.one.play();
+                        minigames.PianoNote[1] = 3;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 2:
+                        music.two.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 3;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 3:
+                        music.three.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 3;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 4:
+                        music.four.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 3;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 5:
+                        music.five.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 3;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 6:
+                        music.six.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 3;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 7:
+                        music.seven.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 3;
+                        minigames.PianoNote[8] = 0;
+                        break;
+                    case 8:
+                        music.eight.play();
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 3;
+                        break;
+                }
+            }
+            if (minigames.PianoDelay === 240) {
+                minigames.PianoIntro = true;
+            }
+            minigames.PianoDelay++;
+        }
+        push();
+        imageMode(CORNERS);
+        image(minigames.PianoBack, width * 0.1, height * 0.1, width * 0.9, height * 0.9);
+        PianoNotes(width * 0.199, height/2, 1);
+        PianoNotes(width * 0.285, height/2, 2);
+        PianoNotes(width * 0.372, height/2, 3);
+        PianoNotes(width * 0.459, height/2, 4);
+        PianoNotes(width * 0.546, height/2, 5);
+        PianoNotes(width * 0.633, height/2, 6);
+        PianoNotes(width * 0.720, height/2, 7);
+        PianoNotes(width * 0.807, height/2, 8);
+        noFill()
+        stroke(0)
+        strokeWeight(5)
+        rect(width * 0.1, height * 0.1, width * 0.9, height * 0.9);
+        imageMode(CENTER);
+        if (minigames.PianoCount === 3){
+            if (minigames.PianoCorrect === minigames.PianoInput){
+                    if (minigames.Ingame1) {
+                        player.gate1comp = true;
+                        minigames.Ingame1 = false;
+                        game.d1 = false;
+                        minigames.PianoInput = "";
+                        minigames.PianoCorrect = "";
+                        minigames.PianoCount = 0;
+                        minigames.PianoIntro = false;
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        minigames.PianoDelay = 0;
+                        music.dooropen.play(0, 1, 0.3);
+                    }
+                    if (minigames.Ingame2) {
+                        player.gate2comp = true;
+                        minigames.Ingame2 = false;
+                        game.d2 = false;
+                        minigames.PianoInput = "";
+                        minigames.PianoCorrect = "";
+                        minigames.PianoCount = 0;
+                        minigames.PianoIntro = false;
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        minigames.PianoDelay = 0;
+                        music.dooropen.play(0, 1, 0.3);
+                    }
+            }
+            else {
+                    if (minigames.Ingame1) {
+                        minigames.Ingame1 = false;
+                        game.d1 = false;
+                        minigames.PianoInput = "";
+                        minigames.PianoCorrect = "";
+                        minigames.PianoCount = 0;
+                        minigames.PianoIntro = false;
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        minigames.PianoDelay = 0;
+                    }
+                    if (minigames.Ingame2) {
+                        minigames.Ingame2 = false;
+                        game.d2 = false;
+                        minigames.PianoInput = "";
+                        minigames.PianoCorrect = "";
+                        minigames.PianoCount = 0;
+                        minigames.PianoIntro = false;
+                        minigames.PianoNote[1] = 0;
+                        minigames.PianoNote[2] = 0;
+                        minigames.PianoNote[3] = 0;
+                        minigames.PianoNote[4] = 0;
+                        minigames.PianoNote[5] = 0;
+                        minigames.PianoNote[6] = 0;
+                        minigames.PianoNote[7] = 0;
+                        minigames.PianoNote[8] = 0;
+                        minigames.PianoDelay = 0;
+                    }
+                    hud.health -= 1;
+                    music.hurt.play(0, 1, 0.3);
+            }
+        }
+        pop();
+        push();
+        fill(255);
+        textSize(20 * (width * 0.0025));
+        textFont('Courier New');
+        fill(255, 100);
+        rect(width * 0.4, height * 0.80, width * 0.6, height * 0.87);
+        fill(0);
+        textSize(12 * (width * 0.0025));
+        text("Repeat", width * 0.5, height * 0.85);
+        text("Play The Piano", width * 0.5, height * 0.18);
+        pop();
+
     }
 }

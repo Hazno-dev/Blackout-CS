@@ -3,6 +3,8 @@
   <component name="ContentModelStore">
     <e p="C:\Users\callu\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
     <e p="C:\Users\callu\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_.19.00" t="ExcludeRecursive" />
+    <e p="C:\Users\callu\AppData\Roaming\JetBrains\Rider2020.3\javascript\extLibs\global-types\node_modules\@types\p5" t="IncludeRecursive" />
+    <e p="C:\Users\callu\AppData\Roaming\JetBrains\Rider2020.3\javascript\extLibs\http_cdn.jsdelivr.net_npm_p5@1.1.9_lib_p5.js" t="IncludeRecursive" />
     <e p="C:\Users\callu\OneDrive\Desktop\Github\Blackout-CS\Blackout\Blackout" t="IncludeFlat" />
   </component>
 </project>
